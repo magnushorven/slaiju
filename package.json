@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
     "start": "node index.js",
-    "prestart": "npm run build",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "test": "npm run -s lint && jest --coverage",
     "test:watch": "npm run -s test -- --watch",
