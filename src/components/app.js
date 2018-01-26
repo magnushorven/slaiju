@@ -21,6 +21,7 @@ export default class App extends Component {
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
 					<Runner path="/runner/" user="Slaiju" />
+					<Runner path="/runner/:user" />
 				</Router>
 			</div>
 		);
