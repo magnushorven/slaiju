@@ -40,7 +40,7 @@ export default class Runner extends Component {
 			reps: this.state.repetition
 		}
 		console.log('postTime',bodyParams)
-		var tryToPost = fetch('http://slaijuapi.herokuapp.com/set', {
+		var tryToPost = fetch('https://slaijuapi.herokuapp.com/set', {
 			method: 'POST',
 		  headers: {
 		    'Accept': 'application/json',
