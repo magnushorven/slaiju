@@ -32,6 +32,7 @@ export default class Runner extends Component {
 		}
 		return false
 	}
+
 	postTime() {
 		var bodyParams = {
 			runType: this.state.runType,
@@ -40,7 +41,7 @@ export default class Runner extends Component {
 			reps: this.state.repetition
 		}
 		console.log('postTime',bodyParams)
-		var tryToPost = fetch('https://slaijuapi.herokuapp.com/set', {
+		var tryToPost = fetch(STATICS.API, {
 			method: 'POST',
 		  headers: {
 		    'Accept': 'application/json',
