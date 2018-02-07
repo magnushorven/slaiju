@@ -1,5 +1,38 @@
 @import '~style/helpers';
 
+.start {
+	margin-left:auto;
+	margin-right:auto;
+	width: 250px;
+	padding:5px 0;
+	font-weight: 800;
+	font-size:16px;
+	color: rgba(25,25,25,1);
+	text-align: center;
+	background-color: rgba(255,255,255,0.7);
+	border-top: 2px solid rgba(177,177,177,1);
+	border-bottom: 2px solid rgba(177,177,177,1);
+	margin-top: 10px;
+	opacity: 0.0001;
+	transition: opacity 0.5s;
+	clear: both;
+	&.active{
+		opacity: 1 !important;
+	}
+}
+.stop {
+	width: 250px;
+	padding:5px 0;
+	font-weight: 800;
+	font-size:16px;
+	color: rgba(25,25,25,1);
+	text-align: center;
+	background-color: rgba(255,255,255,0.7);
+	border-top: 2px solid rgba(177,177,177,1);
+	border-bottom: 2px solid rgba(177,177,177,1);
+	margin-top: 10px;
+	clear: both;
+}
 .runner {
 	padding: 56px 20px;
 	min-height: 100%;
@@ -7,27 +40,59 @@
 	background: #EEE;
 }
 .runButton {
-	padding: 5px 10px;
-	transition: background 0.4s;
-	background: #EEE;
+	margin-left:auto;
+	margin-right:auto;
+	width: 250px;
+	padding:5px 0;
+	font-weight: 800;
+	font-size:16px;
+	color: rgba(25,25,25,1);
 	text-align: center;
-	border: 1px solid #ddd;
+	background-color: rgba(255,255,255,0.7);
+	border-top: 2px solid rgba(122,122,122,1);
+	border-bottom: 2px solid rgba(122,122,122,1);
+	margin-top: 10px;
+	transition: background 0.5s;
+	clear: both;
 }
 .runButton:hover {
 	background: #EFE;
 }
 .typeImage {
 	float:left;
-	margin: 5px;
-	padding: 5px;
+	margin:5px;
 	transition: background 0.4s;
 	background: #EEE;
 	border: 1px solid #ddd;
+	overflow-y: hidden;
+	box-sizing: content-box;
+	width:120px;
+	height:120px;
+	.typeImageText {
+		width:100%;
+		font-weight: 700;
+		border-top: 1px solid #ccc;
+		padding:5px 0px;
+		background-color: rgba(255,255,255,0.4);
+		transition: margin 0.3s;
+		text-align: center;
+	}
 	&.typeImageActive{
 		background: #FEE !important;
+		.typeImageText {
+			margin-top:-32px;
+		}
 	}
 	img {
+		margin: 10px;
 		width: 100px;
 		height: 100px;
 	}
+}
+
+.runInput {
+	font-size: 16px;
+  width: 100px;
+  height: 22px;
+  text-align: center;
 }

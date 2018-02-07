@@ -9,7 +9,7 @@ export default class RunButton extends Component {
 	render() {
 		return (
 			<div class={style.runButton} onClick={this.props.call}>
-				post
+				POST
 			</div>
 		)
 	}

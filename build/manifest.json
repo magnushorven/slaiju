@@ -1,6 +1,6 @@
 {
-  "name": "Preact PWA",
-  "short_name": "Preact PWA",
+  "name": "Slaiju",
+  "short_name": "Slaiju",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",

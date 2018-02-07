@@ -1,10 +1,12 @@
 import { h, Component } from 'preact'
 import style from './style.less'
+import spinner from './spinner.less'
 import moment from 'moment'
-import RunButton from './button.js'
+import RunButton from './runButton.js'
 import TypeImage from './typeImage.js'
 import STATICS from './../../statics.js'
 import _ from 'underscore'
+import classNames from 'classnames'
 
 moment.locale('nb')
 
@@ -92,24 +94,34 @@ export default class Runner extends Component {
 				{state.stopTime ? (
 					<div>
 						<div>started {moment.unix(state.startTime/1000).format('LLL')}, ended {moment.unix(state.stopTime/1000).format('LLL')}, ran for {(state.stopTime-state.startTime)/1000}sec</div>
-						How many repetitions: <input type='text' class={style.runInput} value={state.repetition} onKeyUp={this.handleChange} />
+						<div>Repetitions</div>
+						<input type='text' class={style.runInput} value={state.repetition} onKeyUp={this.handleChange} />
 						<RunButton call={this.postTime.bind(this)} />
-					</div>
-				) : null }
-				{state.running ? (
-					<div>
-						<div>{state.time/10}</div>
-						<a onClick={this.stopTime.bind(this)}>stop</a>
 					</div>
 				) : (
 					<div>
-						<div>
-							{_.map(STATICS.WORKOUTTYPES, (image, key) => <TypeImage runTypeImage={image} runTypeKey={key} runTypeActiveKey={state.runType} setRunType={this.setRunType.bind(this)}/>)}
-						</div>
-						<a onClick={this.startTime.bind(this)}>start</a>
+						{state.running ? (
+							<div>
+								<div class={spinner.loader}>
+								  <span class={spinner.a}></span>
+								  <span class={classNames({[spinner.b]: true, [spinner.spin]: true})}>
+								    <span class={spinner.c}></span>
+								  </span>
+								</div>
+								<div class={spinner.time}>{state.time/10}</div>
+								<div class={style.stop} onClick={this.stopTime.bind(this)}>STOP</div>
+							</div>
+						) : (
+							<div>
+								<div>
+									{_.map(STATICS.WORKOUTTYPES, (image, key) => <TypeImage runTypeImage={image} runTypeKey={key} runTypeActiveKey={state.runType} setRunType={this.setRunType.bind(this)}/>)}
+								</div>
+								<div className={classNames({[style.start]: true, [style.active]: state.runType!==''})} onClick={this.startTime.bind(this)}>START</div>
+							</div>
+						)}
 					</div>
 				)}
-			</div>
+				</div>
 		)
 	}
 }
