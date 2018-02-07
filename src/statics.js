@@ -6,6 +6,11 @@ const STATICS = {
 		RUNNING: 'running.png',
 		SQUATS: 'squats.png',
 	},
+	HEADERS: {
+		START: 'Are you ready?',
+		RUNNING: 'Fucking, GO!',
+		REPORTING: 'Good job!'
+	},
 	API: 'https://slaijuapi.herokuapp.com/set'
 }
 export default STATICS

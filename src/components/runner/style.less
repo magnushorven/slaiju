@@ -1,37 +1,28 @@
 @import '~style/helpers';
 
-.start {
-	margin-left:auto;
-	margin-right:auto;
-	width: 250px;
+.button {
+	width: 100%;
 	padding:5px 0;
 	font-weight: 800;
-	font-size:16px;
+	font-size:22px;
 	color: rgba(25,25,25,1);
 	text-align: center;
 	background-color: rgba(255,255,255,0.7);
 	border-top: 2px solid rgba(177,177,177,1);
 	border-bottom: 2px solid rgba(177,177,177,1);
-	margin-top: 10px;
+	position: fixed;
+	bottom: 20px;
+}
+.start {
+	// margin-top: 20px;
 	opacity: 0.0001;
 	transition: opacity 0.5s;
-	clear: both;
 	&.active{
 		opacity: 1 !important;
 	}
 }
 .stop {
-	width: 250px;
-	padding:5px 0;
-	font-weight: 800;
-	font-size:16px;
-	color: rgba(25,25,25,1);
-	text-align: center;
-	background-color: rgba(255,255,255,0.7);
-	border-top: 2px solid rgba(177,177,177,1);
-	border-bottom: 2px solid rgba(177,177,177,1);
-	margin-top: 10px;
-	clear: both;
+	// margin-top: -30px;
 }
 .runner {
 	padding: 56px 20px;
@@ -39,24 +30,18 @@
 	width: 100%;
 	background: #EEE;
 }
-.runButton {
-	margin-left:auto;
-	margin-right:auto;
-	width: 250px;
-	padding:5px 0;
-	font-weight: 800;
-	font-size:16px;
-	color: rgba(25,25,25,1);
-	text-align: center;
-	background-color: rgba(255,255,255,0.7);
-	border-top: 2px solid rgba(122,122,122,1);
-	border-bottom: 2px solid rgba(122,122,122,1);
-	margin-top: 10px;
-	transition: background 0.5s;
-	clear: both;
+.runItWrapper:after {
+  content: "";
+  display: table;
+  clear: both;
 }
-.runButton:hover {
-	background: #EFE;
+.runButton {
+	// margin-top: 10px;
+	transition: background 0.5s;
+	// clear: both;
+	&:hover {
+		background: #EFE;
+	}
 }
 .typeImage {
 	float:left;
@@ -91,8 +76,8 @@
 }
 
 .runInput {
-	font-size: 16px;
-  width: 100px;
-  height: 22px;
+	font-size: 46px;
+  width: 200px;
+  height: 200px;
   text-align: center;
 }

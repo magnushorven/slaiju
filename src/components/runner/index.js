@@ -70,6 +70,7 @@ export default class Runner extends Component {
 	}
 
 	startTime() {
+		if (this.state.runType==='') { return false}
 		let startTime = moment().format('x')
 		this.timer = setInterval(this.updateTime, 100)
 			this.setState({ repetition: '', time: 0, running: true, startTime: startTime, stopTime: null })
@@ -84,19 +85,19 @@ export default class Runner extends Component {
 	componentWillUnmount() {
 		clearInterval(this.timer)
 	}
-
+	//<div>started {moment.unix(state.startTime/1000).format('LLL')}, ended {moment.unix(state.stopTime/1000).format('LLL')}, ran for {(state.stopTime-state.startTime)/1000}sec</div>
 	render(props,state) {
 		return (
 			<div class={style.runner}>
 				<h1>
-					Are you ready?
+					{state.stopTime ? STATICS.HEADERS.REPORTING : state.running ? STATICS.HEADERS.RUNNING : STATICS.HEADERS.START}
 				</h1>
 				{state.stopTime ? (
 					<div>
-						<div>started {moment.unix(state.startTime/1000).format('LLL')}, ended {moment.unix(state.stopTime/1000).format('LLL')}, ran for {(state.stopTime-state.startTime)/1000}sec</div>
+						<div>Ran for {(state.stopTime-state.startTime)/1000}sec</div>
 						<div>Repetitions</div>
 						<input type='text' class={style.runInput} value={state.repetition} onKeyUp={this.handleChange} />
-						<RunButton call={this.postTime.bind(this)} />
+						<div className={classNames({[style.button]: true,[style.runButton]: true})} onClick={this.postTime.bind(this)}>POST</div>
 					</div>
 				) : (
 					<div>
@@ -109,14 +110,14 @@ export default class Runner extends Component {
 								  </span>
 								</div>
 								<div class={spinner.time}>{state.time/10}</div>
-								<div class={style.stop} onClick={this.stopTime.bind(this)}>STOP</div>
+								<div className={classNames({[style.button]: true,[style.stop]: true})} onClick={this.stopTime.bind(this)}>STOP</div>
 							</div>
 						) : (
 							<div>
-								<div>
+								<div class={style.runItWrapper}>
 									{_.map(STATICS.WORKOUTTYPES, (image, key) => <TypeImage runTypeImage={image} runTypeKey={key} runTypeActiveKey={state.runType} setRunType={this.setRunType.bind(this)}/>)}
 								</div>
-								<div className={classNames({[style.start]: true, [style.active]: state.runType!==''})} onClick={this.startTime.bind(this)}>START</div>
+								<div className={classNames({[style.button]: true,[style.start]: true, [style.active]: state.runType!==''})} onClick={this.startTime.bind(this)}>START</div>
 							</div>
 						)}
 					</div>
