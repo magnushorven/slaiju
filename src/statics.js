@@ -1,10 +1,10 @@
 const STATICS = {
 	WORKOUTTYPES: {
-		DUMBBELLS: 'dumbbells.png',
-		PLANK: 'plank.png',
 		PUSHUPS: 'pushups.png',
+		DUMBBELLS: 'dumbbells.png',
+		PLANK: 'plank.png'/*,
 		RUNNING: 'running.png',
-		SQUATS: 'squats.png',
+		SQUATS: 'squats.png',*/
 	},
 	HEADERS: {
 		START: 'Are you ready?',

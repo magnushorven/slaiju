@@ -1,8 +1,10 @@
 @import '~style/helpers';
-
+h1 {
+	text-align: center;
+}
 .button {
-	width: 100%;
-	padding:5px 0;
+	width: 90%;
+	padding: 5% 0px;
 	font-weight: 800;
 	font-size:22px;
 	color: rgba(25,25,25,1);
@@ -24,7 +26,7 @@
 .stop {
 	// margin-top: -30px;
 }
-.runner {
+.container {
 	padding: 56px 20px;
 	min-height: 100%;
 	width: 100%;
@@ -45,31 +47,31 @@
 }
 .typeImage {
 	float:left;
-	margin:5px;
+	margin:2px;
 	transition: background 0.4s;
-	background: #EEE;
+	background: #efefef;
 	border: 1px solid #ddd;
 	overflow-y: hidden;
 	box-sizing: content-box;
-	width:120px;
-	height:120px;
+	width:104px;
+	height:104px;
 	.typeImageText {
 		width:100%;
 		font-weight: 700;
 		border-top: 1px solid #ccc;
 		padding:5px 0px;
-		background-color: rgba(255,255,255,0.4);
+		background-color: rgba(255,255,255,0.6);
 		transition: margin 0.3s;
 		text-align: center;
 	}
 	&.typeImageActive{
-		background: #FEE !important;
+		background: #effeef !important;
 		.typeImageText {
-			margin-top:-32px;
+			margin-top:-34px;
 		}
 	}
 	img {
-		margin: 10px;
+		margin: 2px;
 		width: 100px;
 		height: 100px;
 	}
@@ -80,4 +82,27 @@
   width: 200px;
   height: 200px;
   text-align: center;
+}
+.calcer {
+	float: left;
+	width: 25%;
+	padding: 15px 0;
+	background: #efefef;
+	border: 1px solid #ddd;
+	text-align: center;
+	font-size: 24px;
+}
+.calcerWrapper:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.calcerValue {
+	margin-top: 30px;
+	width: 100%;
+	background: #FFF;
+	border: 1px solid #dFd;
+	text-align: center;
+	padding: 40px;
+  font-size: 100px;
 }

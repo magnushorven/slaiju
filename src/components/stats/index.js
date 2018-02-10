@@ -6,14 +6,15 @@ import TypeImage from './../runner/typeImage.js'
 import moment from 'moment'
 import _ from 'underscore'
 
-export default class Home extends Component {
+export default class Stats extends Component {
 	constructor() {
 		super()
 		this.state = {
 			sets:[],
-			runType: 'PLANK'
+			runType: 'PUSHUPS'
 		}
 	}
+
 	componentWillMount() {
 		var tryToGet = fetch(STATICS.API, {
 			method: 'GET',
@@ -27,12 +28,13 @@ export default class Home extends Component {
 			this.setState({ sets: responseJson })
     })
 	}
+
 	setRunType(runTypeKey) {
 		this.setState({ runType: runTypeKey })
 	}
 	render(props,state) {
 		return (
-			<div class={style.home}>
+			<div class={style.container}>
 				<h1>Stats</h1>
 				<div class={style2.runItWrapper}>
 					{_.map(STATICS.WORKOUTTYPES, (image, key) => <TypeImage runTypeImage={image} runTypeKey={key} runTypeActiveKey={state.runType} setRunType={this.setRunType.bind(this)}/>)}

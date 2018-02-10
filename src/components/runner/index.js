@@ -3,6 +3,7 @@ import style from './style.less'
 import spinner from './spinner.less'
 import moment from 'moment'
 import RunButton from './runButton.js'
+import Calcer from './calcer.js'
 import TypeImage from './typeImage.js'
 import STATICS from './../../statics.js'
 import _ from 'underscore'
@@ -16,20 +17,33 @@ export default class Runner extends Component {
 		this.state = {
 			time: 0,
 			running: false,
-			runType: '',
-			repetition: ''
+			runType: 'PUSHUPS',
+			repetition: 0,
+			sets: []
 		}
 		this.handleChange = this.handleChange.bind(this)
 	}
-
-
+	componentWillMount() {
+		var tryToGet = fetch(STATICS.API, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			}
+		})
+		.then(response => response.json())
+		.then(responseJson => {
+			console.log('tryToGetThen', responseJson)
+			this.setState({ sets: responseJson })
+		})
+	}
 
 	shouldComponentUpdate(nextProps, nextState) {
 		console.log('shouldComponentUpdate', nextState, this.state);
 		if (nextState.runType!==this.state.runType ||
 				nextState.time!==this.state.time ||
 				nextState.stopTime!==this.state.stopTime ||
-				nextState.running!==this.state.running) {
+				nextState.running!==this.state.running ||
+				nextState.repetition!==this.state.repetition) {
 					return true
 		}
 		return false
@@ -54,12 +68,17 @@ export default class Runner extends Component {
 		tryToPost.then(response => {
 			console.log('tryToPostthen', response.json())
 		})
-		this.setState({ stopTime: null })
+		this.setState({ stopTime: null, sets: _.extend(this.state.sets, bodyParams)})
 	}
 
 	handleChange(event) {
 		console.log('setRepetition',event.target.value)
 		this.setState({ repetition: event.target.value })
+	}
+	calcit(value) {
+		console.log('calcit',value)
+		let val = this.state.repetition + value < 0 ? 0 : this.state.repetition + value
+		this.setState({ repetition: val })
 	}
 	setRunType(runTypeKey) {
 		this.setState({ runType: runTypeKey })
@@ -73,7 +92,7 @@ export default class Runner extends Component {
 		if (this.state.runType==='') { return false}
 		let startTime = moment().format('x')
 		this.timer = setInterval(this.updateTime, 100)
-			this.setState({ repetition: '', time: 0, running: true, startTime: startTime, stopTime: null })
+			this.setState({ repetition: 0, time: 0, running: true, startTime: startTime, stopTime: null })
 	}
 
 	stopTime() {
@@ -86,18 +105,26 @@ export default class Runner extends Component {
 		clearInterval(this.timer)
 	}
 	//<div>started {moment.unix(state.startTime/1000).format('LLL')}, ended {moment.unix(state.stopTime/1000).format('LLL')}, ran for {(state.stopTime-state.startTime)/1000}sec</div>
+	//<input type='text' class={style.runInput} value={state.repetition} onKeyUp={this.handleChange} />
 	render(props,state) {
 		return (
-			<div class={style.runner}>
+			<div class={style.container}>
 				<h1>
 					{state.stopTime ? STATICS.HEADERS.REPORTING : state.running ? STATICS.HEADERS.RUNNING : STATICS.HEADERS.START}
 				</h1>
 				{state.stopTime ? (
 					<div>
-						<div>Ran for {(state.stopTime-state.startTime)/1000}sec</div>
-						<div>Repetitions</div>
-						<input type='text' class={style.runInput} value={state.repetition} onKeyUp={this.handleChange} />
-						<div className={classNames({[style.button]: true,[style.runButton]: true})} onClick={this.postTime.bind(this)}>POST</div>
+						<h2>
+							{(state.stopTime-state.startTime)/1000} sec, repetitions:
+						</h2>
+						<div class={style.calcerWrapper}>
+							<Calcer f={this.calcit.bind(this)} a={-5} b="-5" />
+							<Calcer f={this.calcit.bind(this)} a={-1} b="-1" />
+							<Calcer f={this.calcit.bind(this)} a={1} b="+1" />
+							<Calcer f={this.calcit.bind(this)} a={5} b="+5" />
+						</div>
+						<div class={style.calcerValue}>{state.repetition}</div>
+						{state.repetition>0 ? (<div className={classNames({[style.button]: true,[style.runButton]: true})} onClick={this.postTime.bind(this)}>POST</div>) : null}
 					</div>
 				) : (
 					<div>

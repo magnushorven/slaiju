@@ -2,7 +2,8 @@ import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 
 import Header from './header';
-import Home from './home';
+import Stats from './stats';
+import Admin from './admin';
 import Runner from './runner';
 
 export default class App extends Component {
@@ -16,9 +17,9 @@ export default class App extends Component {
 			<div id="app">
 				<Header />
 				<Router onChange={this.handleRoute}>
-					<Home path="/" />
-					<Runner path="/runner/" user="Slaiju" />
-					<Runner path="/runner/:user" />
+					<Runner path="/" />
+					<Stats path="/stats/" />
+					<Admin path="/admin/" />
 				</Router>
 			</div>
 		);
