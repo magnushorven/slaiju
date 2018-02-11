@@ -4,6 +4,7 @@ import spinner from './spinner.less'
 import moment from 'moment'
 import RunButton from './runButton.js'
 import Calcer from './calcer.js'
+import GoalGraph from './goalGraph.js'
 import TypeImage from './typeImage.js'
 import STATICS from './../../statics.js'
 import _ from 'underscore'
@@ -19,11 +20,27 @@ export default class Runner extends Component {
 			running: false,
 			runType: 'PUSHUPS',
 			repetition: 0,
-			sets: []
+			sets: [],
+			weeklyGoal: null
 		}
 		this.handleChange = this.handleChange.bind(this)
 	}
 	componentWillMount() {
+		this.getSets()
+
+		var tryToGetGoal = fetch(STATICS.GOALAPI, {
+			method: 'GET',
+		  headers: {
+		    'Content-Type': 'application/json',
+		  }
+		})
+		.then(response => response.json())
+    .then(responseJson => {
+			console.log('tryToGetGoalThen', responseJson)
+			this.setState({ weeklyGoal: responseJson[0].weeklyGoal })
+    })
+	}
+	getSets() {
 		var tryToGet = fetch(STATICS.API, {
 			method: 'GET',
 			headers: {
@@ -36,14 +53,16 @@ export default class Runner extends Component {
 			this.setState({ sets: responseJson })
 		})
 	}
-
 	shouldComponentUpdate(nextProps, nextState) {
 		console.log('shouldComponentUpdate', nextState, this.state);
 		if (nextState.runType!==this.state.runType ||
 				nextState.time!==this.state.time ||
 				nextState.stopTime!==this.state.stopTime ||
 				nextState.running!==this.state.running ||
-				nextState.repetition!==this.state.repetition) {
+				nextState.repetition!==this.state.repetition ||
+				nextState.sets!==this.state.sets ||
+				nextState.sets.length!==this.state.sets.length ||
+				nextState.weeklyGoal!==this.state.weeklyGoal) {
 					return true
 		}
 		return false
@@ -68,7 +87,8 @@ export default class Runner extends Component {
 		tryToPost.then(response => {
 			console.log('tryToPostthen', response.json())
 		})
-		this.setState({ stopTime: null, sets: _.extend(this.state.sets, bodyParams)})
+		this.setState({ stopTime: null})
+		this.getSets()
 	}
 
 	handleChange(event) {
@@ -144,12 +164,23 @@ export default class Runner extends Component {
 								<div class={style.runItWrapper}>
 									{_.map(STATICS.WORKOUTTYPES, (image, key) => <TypeImage runTypeImage={image} runTypeKey={key} runTypeActiveKey={state.runType} setRunType={this.setRunType.bind(this)}/>)}
 								</div>
+								<GoalGraph weeklyGoal={state.weeklyGoal} weeklyProgress=
+								{_.reduce(
+									_.map(
+										_.filter(
+											state.sets, s => s.runType===state.runType && moment.unix(s.stopTime/1000).format('W') === moment().format('W')
+										),
+										s => s.reps
+									),
+									(i,o) =>  {return i+o},0
+								)}
+								/>
 								<div className={classNames({[style.button]: true,[style.start]: true, [style.active]: state.runType!==''})} onClick={this.startTime.bind(this)}>START</div>
 							</div>
 						)}
 					</div>
 				)}
-				</div>
+			</div>
 		)
 	}
 }

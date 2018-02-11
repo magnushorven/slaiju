@@ -11,6 +11,7 @@ const STATICS = {
 		RUNNING: 'Fucking, GO!',
 		REPORTING: 'Good job!'
 	},
-	API: 'https://slaijuapi.herokuapp.com/set'
+	API: 'https://slaijuapi.herokuapp.com/set',
+	GOALAPI: 'https://slaijuapi.herokuapp.com/goal'
 }
 export default STATICS
