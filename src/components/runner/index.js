@@ -187,7 +187,7 @@ export default class Runner extends Component {
 					)}
 					</div>
 				): (
-					<Link activeClassName="active" href="/profile">Login to GO!</Link>
+					<Link class={style.loginButton} href="/profile">Login to GO!</Link>
 				)}
 			</div>
 		)

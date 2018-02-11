@@ -28,8 +28,8 @@ export default class Profile extends Component {
 		return (
 			<div class={runnerStyle.container}>
 				<h1>Profile</h1>
-				<input class={style.inputName} type='text' onKeyUp={this.handleChange} value={this.state.name} />
-				<div class={runnerStyle.button} onMouseDown={this.updateLogin.bind(this)}>UPDATE LOGIN</div>
+				<input class={style.inputName} type='text' onKeyUp={this.handleChange} value={this.state.name} placeholder='Your name' />
+				<div class={runnerStyle.button} onMouseDown={this.updateLogin.bind(this)}>UPDATE NAME</div>
 			</div>
 		)
 	}
