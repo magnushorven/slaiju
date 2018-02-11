@@ -5,6 +5,7 @@ import createHashHistory from 'history/createHashHistory';
 import Header from './header';
 import Stats from './stats';
 import Admin from './admin';
+import Profile from './profile';
 import Runner from './runner';
 
 export default class App extends Component {
@@ -25,6 +26,7 @@ export default class App extends Component {
 					<Runner path="/" />
 					<Stats path="/stats/" />
 					<Admin path="/admin/" />
+					<Profile path="/profile/" />
 				</Router>
 			</div>
 		);

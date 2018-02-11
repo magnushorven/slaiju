@@ -39,8 +39,8 @@ export default class Stats extends Component {
 				<div class={style2.runItWrapper}>
 					{_.map(STATICS.WORKOUTTYPES, (image, key) => <TypeImage runTypeImage={image} runTypeKey={key} runTypeActiveKey={state.runType} setRunType={this.setRunType.bind(this)}/>)}
 				</div>
-				<div>
-					{_.map(_.sortBy(_.where(state.sets, {runType:state.runType}),'startTime').reverse(), set => <div>{moment.unix(set.startTime/1000).format('LLL')} {set.runType} {set.reps}</div>)}
+				<div class={style.statsWrapper}>
+					{_.map(_.sortBy(_.where(state.sets, {runType:state.runType}),'startTime').reverse(), set => <div>{moment.unix(set.startTime/1000).format('L HH:MM:SS')} {set.name} {set.reps}</div>)}
 				</div>
 			</div>
 		)

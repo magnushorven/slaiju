@@ -1,4 +1,5 @@
 import { h, Component } from 'preact'
+import { Link } from 'preact-router/match';
 import style from './style.less'
 import spinner from './spinner.less'
 import moment from 'moment'
@@ -21,7 +22,8 @@ export default class Runner extends Component {
 			runType: 'PUSHUPS',
 			repetition: 0,
 			sets: [],
-			weeklyGoal: null
+			weeklyGoal: null,
+			name: localStorage.getItem('name')
 		}
 		this.handleChange = this.handleChange.bind(this)
 	}
@@ -73,7 +75,8 @@ export default class Runner extends Component {
 			runType: this.state.runType,
 			startTime: this.state.startTime,
 			stopTime: this.state.stopTime,
-			reps: this.state.repetition
+			reps: this.state.repetition,
+			name: this.state.name
 		}
 		console.log('postTime',bodyParams)
 		var tryToPost = fetch(STATICS.API, {
@@ -132,53 +135,59 @@ export default class Runner extends Component {
 				<h1>
 					{state.stopTime ? STATICS.HEADERS.REPORTING : state.running ? STATICS.HEADERS.RUNNING : STATICS.HEADERS.START}
 				</h1>
-				{state.stopTime ? (
+				{state.name ? (
 					<div>
-						<h2>
-							{(state.stopTime-state.startTime)/1000} sec, repetitions:
-						</h2>
-						<div class={style.calcerWrapper}>
-							<Calcer f={this.calcit.bind(this)} a={-5} b="-5" />
-							<Calcer f={this.calcit.bind(this)} a={-1} b="-1" />
-							<Calcer f={this.calcit.bind(this)} a={1} b="+1" />
-							<Calcer f={this.calcit.bind(this)} a={5} b="+5" />
+					{state.stopTime ? (
+						<div>
+							<h2>
+								{(state.stopTime-state.startTime)/1000} sec, repetitions:
+							</h2>
+							<div class={style.calcerWrapper}>
+								<Calcer f={this.calcit.bind(this)} a={-5} b="-5" />
+								<Calcer f={this.calcit.bind(this)} a={-1} b="-1" />
+								<Calcer f={this.calcit.bind(this)} a={1} b="+1" />
+								<Calcer f={this.calcit.bind(this)} a={5} b="+5" />
+							</div>
+							<div class={style.calcerValue}>{state.repetition}</div>
+							{state.repetition>0 ? (<div className={classNames({[style.button]: true,[style.runButton]: true})} onClick={this.postTime.bind(this)}>POST</div>) : null}
 						</div>
-						<div class={style.calcerValue}>{state.repetition}</div>
-						{state.repetition>0 ? (<div className={classNames({[style.button]: true,[style.runButton]: true})} onClick={this.postTime.bind(this)}>POST</div>) : null}
-					</div>
-				) : (
-					<div>
-						{state.running ? (
-							<div>
-								<div class={spinner.loader}>
-								  <span class={spinner.a}></span>
-								  <span class={classNames({[spinner.b]: true, [spinner.spin]: true})}>
-								    <span class={spinner.c}></span>
-								  </span>
+					) : (
+						<div>
+							{state.running ? (
+								<div>
+									<div class={spinner.loader}>
+									  <span class={spinner.a}></span>
+									  <span class={classNames({[spinner.b]: true, [spinner.spin]: true})}>
+									    <span class={spinner.c}></span>
+									  </span>
+									</div>
+									<div class={spinner.time}>{state.time/10}</div>
+									<div className={classNames({[style.button]: true,[style.stop]: true})} onClick={this.stopTime.bind(this)}>STOP</div>
 								</div>
-								<div class={spinner.time}>{state.time/10}</div>
-								<div className={classNames({[style.button]: true,[style.stop]: true})} onClick={this.stopTime.bind(this)}>STOP</div>
-							</div>
-						) : (
-							<div>
-								<div class={style.runItWrapper}>
-									{_.map(STATICS.WORKOUTTYPES, (image, key) => <TypeImage runTypeImage={image} runTypeKey={key} runTypeActiveKey={state.runType} setRunType={this.setRunType.bind(this)}/>)}
-								</div>
-								<GoalGraph weeklyGoal={state.weeklyGoal} weeklyProgress=
-								{_.reduce(
-									_.map(
-										_.filter(
-											state.sets, s => s.runType===state.runType && moment.unix(s.stopTime/1000).format('W') === moment().format('W')
+							) : (
+								<div>
+									<div class={style.runItWrapper}>
+										{_.map(STATICS.WORKOUTTYPES, (image, key) => <TypeImage runTypeImage={image} runTypeKey={key} runTypeActiveKey={state.runType} setRunType={this.setRunType.bind(this)}/>)}
+									</div>
+									<GoalGraph weeklyGoal={state.weeklyGoal} weeklyProgress=
+									{_.reduce(
+										_.map(
+											_.filter(
+												state.sets, s => s.runType===state.runType && moment.unix(s.stopTime/1000).format('W') === moment().format('W')
+											),
+											s => s.reps
 										),
-										s => s.reps
-									),
-									(i,o) =>  {return i+o},0
-								)}
-								/>
-								<div className={classNames({[style.button]: true,[style.start]: true, [style.active]: state.runType!==''})} onClick={this.startTime.bind(this)}>START</div>
-							</div>
-						)}
+										(i,o) =>  {return i+o},0
+									)}
+									/>
+									<div className={classNames({[style.button]: true,[style.start]: true, [style.active]: state.runType!==''})} onClick={this.startTime.bind(this)}>START</div>
+								</div>
+							)}
+						</div>
+					)}
 					</div>
+				): (
+					<Link activeClassName="active" href="/profile">Login to GO!</Link>
 				)}
 			</div>
 		)

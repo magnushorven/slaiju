@@ -11,6 +11,7 @@ export default class Header extends Component {
 				<nav>
 					<Link activeClassName="active" href="/">Do it</Link>
 					<Link activeClassName="active" href="/stats">Stats</Link>
+					<Link activeClassName="active" href="/profile">{localStorage.getItem('name') ? localStorage.getItem('name') : 'login'}</Link>
 				</nav>
 			</header>
 		);
