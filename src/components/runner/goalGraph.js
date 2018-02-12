@@ -8,7 +8,7 @@ export default class GoalGraph extends Component {
 
 	render() {
 		console.log(this.props)
-		let goalPercent = (this.props.weeklyProgress/this.props.weeklyGoal)*100
+		let goalPercent = parseFloat((this.props.weeklyProgress/this.props.weeklyGoal)*100).toFixed(2)
 		let goalStyle = {
 			'width':goalPercent+'%'
 		}

@@ -161,7 +161,7 @@ export default class Runner extends Component {
 									    <span class={spinner.c}></span>
 									  </span>
 									</div>
-									<div class={spinner.time}>{state.time/10}</div>
+									<div class={spinner.time}>{parseFloat(state.time/10).toFixed(1)}</div>
 									<div className={classNames({[style.button]: true,[style.stop]: true})} onClick={this.stopTime.bind(this)}>STOP</div>
 								</div>
 							) : (
