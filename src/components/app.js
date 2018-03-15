@@ -7,6 +7,7 @@ import Stats from './stats';
 import Admin from './admin';
 import Profile from './profile';
 import Runner from './runner';
+import Yoga from './yoga';
 
 export default class App extends Component {
 /*	onst Main = () => (
@@ -27,6 +28,7 @@ export default class App extends Component {
 					<Stats path="/stats/" />
 					<Admin path="/admin/" />
 					<Profile path="/profile/" />
+					<Yoga path="/yoga/" />
 				</Router>
 			</div>
 		);
