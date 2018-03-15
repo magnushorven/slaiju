@@ -50,6 +50,7 @@ export default class Yoga extends Component {
 	render(props,state) {
 		return (
 			<div class={style.container}>
+				Yoga
 				<YogaLogo/>
 			</div>
 		)
